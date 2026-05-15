@@ -1,1 +1,5 @@
 <!-- A placeholder to allow defining custom metadata -->
+
+{% if page.layout == 'post' %}
+  <link rel="stylesheet" href="{{ '/assets/css/toc-left.css' | relative_url }}">
+{% endif %}
