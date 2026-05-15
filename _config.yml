@@ -14,31 +14,31 @@ timezone: Asia/Shanghai
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Timz # 站点主标题
+title: TimzXX # 站点主标题
 
 tagline: 记录学习，分享技术 # 副标题
 
 description: >- # SEO meta 和 Atom feed 使用的描述
-  Timz 的个人博客，专注于计算机视觉、3D 重建与深度学习技术分享。
+  TimzXX 的个人博客，专注于计算机视觉、3D 重建与深度学习技术分享。
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://1586279321-eng.github.io"
+url: "https://timzxx.github.io"
 
 github:
-  username: 1586279321-eng # 你的 GitHub 用户名
+  username: TimzXX # 你的 GitHub 用户名
 
 twitter:
   username: # 留空
 
 social:
   # 你的名字，显示为文章默认作者和页脚版权所有者
-  name: Timz
+  name: TimzXX
   email: 1586279321@qq.com
   fediverse_handle: # 留空
   links:
     # 第一个链接作为版权所有者链接
-    - https://github.com/1586279321-eng
+    - https://github.com/TimzXX
     # 取消注释以添加更多社交链接
     # - https://www.linkedin.com/in/username
 
@@ -120,7 +120,7 @@ comments:
   disqus:
     shortname: # fill with the Disqus shortname.
   utterances:
-    repo: 1586279321-eng/Timz.github.io
+    repo: TimzXX/Timz.github.io
     issue_term: pathname
   giscus:
     repo: # <gh-username>/<repo>
