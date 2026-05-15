@@ -1,0 +1,20 @@
+# Jekyll build output
+_site/
+
+# Bundler
+.bundle/
+vendor/bundle/
+
+# Source template (not needed for the site)
+jekyll-theme-chirpy-master/
+
+# Redundant files
+OIP.webp
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
