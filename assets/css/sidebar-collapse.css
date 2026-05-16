@@ -1,0 +1,75 @@
+/* 侧边栏折叠按钮 */
+
+.sidebar-collapse-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: -14px;
+  z-index: 10;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--sidebar-border-color);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-btn-color);
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  padding: 0;
+  line-height: 1;
+}
+
+.sidebar-collapse-btn:hover {
+  background: var(--sidebar-hover-bg);
+  color: var(--sidebar-active-color);
+}
+
+.sidebar-collapse-btn i {
+  transition: transform 0.3s ease;
+}
+
+/* 移动端不显示折叠按钮（移动端有自己的侧边栏开关） */
+@media (max-width: 1199px) {
+  .sidebar-collapse-btn {
+    display: none !important;
+  }
+}
+
+/* 桌面端侧边栏折叠（仅≥1200px生效） */
+@media (min-width: 1200px) {
+  .sidebar-collapse-btn {
+    display: flex;
+  }
+
+  /* 折叠时侧边栏变窄 */
+  #sidebar.collapsed {
+    width: 0;
+    overflow: hidden;
+    border-right: none;
+  }
+
+  #sidebar.collapsed .profile-wrapper,
+  #sidebar.collapsed nav,
+  #sidebar.collapsed .sidebar-bottom {
+    display: none;
+  }
+
+  /* 折叠时按钮移到左边 */
+  #sidebar.collapsed .sidebar-collapse-btn {
+    right: auto;
+    left: 10px;
+    top: 0.75rem;
+  }
+
+  #sidebar.collapsed .sidebar-collapse-btn i {
+    transform: rotate(180deg);
+  }
+
+  /* 折叠时内容区扩展 */
+  #sidebar.collapsed ~ #main-wrapper {
+    margin-left: 36px;
+  }
+}

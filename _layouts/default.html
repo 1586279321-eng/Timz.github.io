@@ -81,6 +81,9 @@ layout: compress
       {% include {{ _include_path }} %}
     {% endfor %}
 
+    <!-- 侧边栏折叠脚本（全局） -->
+    {% include sidebar-collapse-scripts.html %}
+
     {% include_cached search-loader.html lang=lang %}
   </body>
 </html>
