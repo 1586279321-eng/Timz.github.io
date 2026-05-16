@@ -1,23 +1,24 @@
 /* 侧边栏折叠按钮 */
 
 .sidebar-collapse-btn {
-  position: absolute;
+  display: none;
+  position: fixed;
   top: 0.75rem;
-  right: -14px;
-  z-index: 10;
-  width: 28px;
-  height: 28px;
+  left: 260px;
+  transform: translateX(-50%);
+  z-index: 1050;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--sidebar-border-color);
+  border: 2px solid var(--sidebar-border-color);
   background: var(--sidebar-bg);
   color: var(--sidebar-btn-color);
   cursor: pointer;
-  font-size: 0.75rem;
-  display: none;
+  font-size: 1rem;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   padding: 0;
   line-height: 1;
 }
@@ -25,51 +26,58 @@
 .sidebar-collapse-btn:hover {
   background: var(--sidebar-hover-bg);
   color: var(--sidebar-active-color);
+  border-color: var(--sidebar-active-color);
 }
 
 .sidebar-collapse-btn i {
   transition: transform 0.3s ease;
 }
 
-/* 移动端不显示折叠按钮（移动端有自己的侧边栏开关） */
+/* 移动端不显示 */
 @media (max-width: 1199px) {
   .sidebar-collapse-btn {
     display: none !important;
   }
 }
 
-/* 桌面端侧边栏折叠（仅≥1200px生效） */
+/* 桌面端：折叠功能 */
 @media (min-width: 1200px) {
   .sidebar-collapse-btn {
     display: flex;
   }
 
-  /* 折叠时侧边栏变窄 */
+  /* 折叠状态：侧边栏隐藏 */
   #sidebar.collapsed {
-    width: 0;
-    overflow: hidden;
-    border-right: none;
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    border-right: none !important;
   }
 
   #sidebar.collapsed .profile-wrapper,
   #sidebar.collapsed nav,
   #sidebar.collapsed .sidebar-bottom {
-    display: none;
+    display: none !important;
   }
 
-  /* 折叠时按钮移到左边 */
-  #sidebar.collapsed .sidebar-collapse-btn {
-    right: auto;
-    left: 10px;
-    top: 0.75rem;
+  /* 折叠后按钮移到左侧 */
+  #sidebar.collapsed ~ .sidebar-collapse-btn {
+    left: 18px;
   }
 
-  #sidebar.collapsed .sidebar-collapse-btn i {
+  #sidebar.collapsed ~ .sidebar-collapse-btn i {
     transform: rotate(180deg);
   }
 
-  /* 折叠时内容区扩展 */
+  /* 内容区随侧边栏调整 */
   #sidebar.collapsed ~ #main-wrapper {
     margin-left: 36px;
+  }
+}
+
+/* 超大屏幕按钮位置调整 */
+@media (min-width: 1650px) {
+  .sidebar-collapse-btn {
+    left: 300px;
   }
 }
