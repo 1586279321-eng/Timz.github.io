@@ -1,65 +1,49 @@
-<!-- The Top Bar -->
+<!-- 顶部导航栏 -->
 
 <header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar">
-  <div
-    id="topbar"
-    class="d-flex align-items-center justify-content-between px-lg-3 h-100"
-  >
-    <nav id="breadcrumb" aria-label="Breadcrumb">
-      {% assign paths = page.url | split: '/' %}
-
-      {% if paths.size == 0 or page.layout == 'home' %}
-        <!-- index page -->
-        <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
-
-      {% else %}
-        {% for item in paths %}
-          {% if forloop.first %}
-            <span>
-              <a href="{{ '/' | relative_url }}">
-                {{- site.data.locales[include.lang].tabs.home | capitalize -}}
-              </a>
-            </span>
-
-          {% elsif forloop.last %}
-            {% if page.collection == 'tabs' %}
-              <span>{{ site.data.locales[include.lang].tabs[item] | default: page.title }}</span>
-            {% else %}
-              <span>{{ page.title }}</span>
-            {% endif %}
-
-          {% elsif page.layout == 'category' or page.layout == 'tag' %}
-            <span>
-              <a href="{{ item | append: '/' | relative_url }}">
-                {{- site.data.locales[include.lang].tabs[item] | default: page.title -}}
-              </a>
-            </span>
-          {% endif %}
-        {% endfor %}
+  <div id="topbar" class="d-flex align-items-center h-100">
+    <!-- 左侧：头像 + 站点名 -->
+    <a href="https://github.com/{{ site.github.username }}" target="_blank" class="topbar-brand d-flex align-items-center text-decoration-none" rel="noopener noreferrer">
+      {% if site.avatar != empty and site.avatar %}
+        {% capture avatar_url %}{% include media-url.html src=site.avatar %}{% endcapture %}
+        <img src="{{ avatar_url }}" width="32" height="32" alt="avatar" class="topbar-avatar rounded-circle">
       {% endif %}
+      <span class="topbar-title ms-2">{{ site.title }}</span>
+    </a>
+
+    <!-- 中间：导航链接 -->
+    <nav class="topbar-nav d-flex align-items-center ms-auto">
+      <a href="{{ '/' | relative_url }}" class="topbar-link {% if page.layout == 'home' %}active{% endif %}">
+        <i class="fas fa-home fa-fw me-1"></i>{{ site.data.locales[lang].tabs.home }}
+      </a>
+      {% for tab in site.tabs %}
+        <a href="{{ tab.url | relative_url }}" class="topbar-link {% if tab.url == page.url %}active{% endif %}">
+          <i class="fa-fw {{ tab.icon }} me-1"></i>
+          {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
+          {{ site.data.locales[lang].tabs.[tab_name] | default: tab.title }}
+        </a>
+      {% endfor %}
     </nav>
-    <!-- endof #breadcrumb -->
 
-    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar">
-      <i class="fas fa-bars fa-fw"></i>
-    </button>
+    <!-- 右侧：搜索 + 暗色模式 + GitHub -->
+    <div class="topbar-actions d-flex align-items-center ms-3">
+      <button type="button" id="search-trigger" class="topbar-btn" aria-label="Search">
+        <i class="fas fa-search fa-fw"></i>
+      </button>
 
-    <div id="topbar-title">
-      {% if page.layout == 'home' %}
-        {{- site.data.locales[include.lang].title | default: site.title -}}
-      {% elsif page.collection == 'tabs' or page.layout == 'page' %}
-        {%- capture tab_key -%}{{ page.url | split: '/' }}{%- endcapture -%}
-        {{- site.data.locales[include.lang].tabs[tab_key] | default: page.title -}}
-      {% else %}
-        {{- site.data.locales[include.lang].layout[page.layout] | default: page.layout | capitalize -}}
+      <button type="button" class="topbar-btn" id="mode-toggle" aria-label="Switch Mode">
+        <i class="fas fa-adjust"></i>
+      </button>
+
+      {% if site.github.username %}
+        <a href="https://github.com/{{ site.github.username }}" target="_blank" class="topbar-btn" aria-label="GitHub" rel="noopener noreferrer">
+          <i class="fab fa-github"></i>
+        </a>
       {% endif %}
     </div>
 
-    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Search">
-      <i class="fas fa-search fa-fw"></i>
-    </button>
-
-    <search id="search" class="align-items-center ms-3 ms-lg-0">
+    <!-- 搜索框（展开时显示） -->
+    <search id="search" class="align-items-center ms-3">
       <i class="fas fa-search fa-fw"></i>
       <input
         class="form-control"
@@ -67,11 +51,14 @@
         type="search"
         aria-label="search"
         autocomplete="off"
-        placeholder="{{ site.data.locales[include.lang].search.hint | capitalize }}..."
+        placeholder="{{ site.data.locales[lang].search.hint | capitalize }}..."
       >
     </search>
-    <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">
-      {{- site.data.locales[include.lang].search.cancel -}}
+    <button type="button" class="topbar-btn text-decoration-none" id="search-cancel">
+      {{- site.data.locales[lang].search.cancel -}}
     </button>
+
+    <!-- 隐藏的触发器（防止主题 JS 报错） -->
+    <button type="button" id="sidebar-trigger" style="display:none" aria-hidden="true"></button>
   </div>
 </header>

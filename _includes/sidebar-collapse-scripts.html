@@ -1,28 +1,7 @@
-<script>
-  // 侧边栏折叠功能
-  (function() {
-    var sidebar = document.getElementById('sidebar');
-    var btn = document.getElementById('sidebar-collapse-btn');
-    if (!sidebar || !btn) return;
-
-    // 恢复折叠状态
-    if (localStorage.getItem('sidebar-collapsed') === 'true') {
-      sidebar.classList.add('collapsed');
-    }
-
-    // 点击切换
-    btn.addEventListener('click', function() {
-      var isNowCollapsed = !sidebar.classList.contains('collapsed');
-      sidebar.classList.toggle('collapsed');
-      localStorage.setItem('sidebar-collapsed', isNowCollapsed.toString());
-    });
-  })();
-</script>
-
 {% if page.layout == 'post' %}
 <script>
   // 左侧目录折叠功能
-  (function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var tocSidebar = document.getElementById('toc-left-sidebar');
     var tocToggle = document.getElementById('toc-left-toggle');
     if (!tocSidebar || !tocToggle) return;
@@ -33,10 +12,10 @@
     }
 
     tocToggle.addEventListener('click', function() {
-      var isNowCollapsed = !tocSidebar.classList.contains('collapsed');
       tocSidebar.classList.toggle('collapsed');
-      localStorage.setItem('toc-left-collapsed', isNowCollapsed.toString());
+      var isCollapsed = tocSidebar.classList.contains('collapsed');
+      localStorage.setItem('toc-left-collapsed', isCollapsed.toString());
     });
-  })();
+  });
 </script>
 {% endif %}
