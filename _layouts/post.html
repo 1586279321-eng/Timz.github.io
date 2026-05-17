@@ -97,18 +97,14 @@ script_includes:
           </span>
 
           <div>
-            <!-- pageviews -->
-            {% if site.pageviews.provider and site.analytics[site.pageviews.provider].id %}
-              <span>
-                <em id="pageviews">
-                  <i class="fas fa-spinner fa-spin small"></i>
-                </em>
-                {{ site.data.locales[lang].post.pageview_measure }}
-              </span>
-            {% endif %}
-
             <!-- read time -->
             {% include read-time.html content=content prompt=true lang=lang %}
+
+            <!-- 不蒜子页面阅读次数 -->
+            <span class="ms-2">
+              <i class="fas fa-eye fa-fw small"></i>
+              <span id="busuanzi_value_page_pv">-</span> 次阅读
+            </span>
           </div>
         </div>
       </div>

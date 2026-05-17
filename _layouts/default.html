@@ -86,5 +86,9 @@ layout: compress
     {% include sidebar-collapse-scripts.html %}
 
     {% include_cached search-loader.html lang=lang %}
+
+    {% if jekyll.environment == 'production' %}
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    {% endif %}
   </body>
 </html>
