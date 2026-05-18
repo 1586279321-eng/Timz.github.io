@@ -12,25 +12,24 @@ script_includes:
 
 {% include toc-status.html %}
 
-<!-- 左侧目录容器 -->
-<div class="post-with-toc">
-  {% if enable_toc %}
-    <aside class="toc-left-sidebar" id="toc-left-sidebar">
-      <div class="toc-left-header">
-        <span class="toc-left-title">{{- site.data.locales[lang].panel.toc -}}</span>
-        <button type="button" class="toc-left-toggle" id="toc-left-toggle" aria-label="折叠目录">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-      </div>
-      <div class="toc-left-body" id="toc-left-body">
-        <section id="toc-wrapper">
-          <nav id="toc"></nav>
-        </section>
-      </div>
-    </aside>
-  {% endif %}
+<!-- 左侧目录 -->
+{% if enable_toc %}
+  <aside class="toc-left-sidebar" id="toc-left-sidebar">
+    <div class="toc-left-header">
+      <span class="toc-left-title">{{- site.data.locales[lang].panel.toc -}}</span>
+      <button type="button" class="toc-left-toggle" id="toc-left-toggle" aria-label="折叠目录">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+    <div class="toc-left-body" id="toc-left-body">
+      <section id="toc-wrapper">
+        <nav id="toc"></nav>
+      </section>
+    </div>
+  </aside>
+{% endif %}
 
-  <article class="px-1{% if enable_toc %} has-toc{% endif %}" data-toc="{{ enable_toc }}">
+<article class="px-1{% if enable_toc %} has-toc{% endif %}" data-toc="{{ enable_toc }}">
     <header>
       <h1 data-toc-skip>{{ page.title }}</h1>
       {% if page.description %}
@@ -194,5 +193,3 @@ script_includes:
     </div>
     <!-- div.post-tail-wrapper -->
   </article>
-</div>
-<!-- .post-with-toc -->
