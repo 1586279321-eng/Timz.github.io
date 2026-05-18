@@ -17,15 +17,16 @@ script_includes:
   <aside class="toc-left-sidebar" id="toc-left-sidebar">
     <div class="toc-left-header">
       <span class="toc-left-title">{{- site.data.locales[lang].panel.toc -}}</span>
-      <button type="button" class="toc-left-toggle" id="toc-left-toggle" aria-label="折叠目录">
-        <i class="fas fa-chevron-left"></i>
-      </button>
+      <button type="button" class="toc-content-toggle" id="toc-content-toggle" aria-label="折叠目录内容" title="折叠目录内容">−</button>
     </div>
     <div class="toc-left-body" id="toc-left-body">
       <section id="toc-wrapper">
         <nav id="toc"></nav>
       </section>
     </div>
+    <button type="button" class="toc-sidebar-toggle-btn" id="toc-sidebar-toggle-btn" aria-label="收起目录栏" title="收起目录栏">
+      <i class="fas fa-chevron-left"></i>
+    </button>
   </aside>
 {% endif %}
 

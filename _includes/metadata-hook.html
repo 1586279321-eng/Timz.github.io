@@ -2,31 +2,106 @@
 
 {% if page.layout == 'post' %}
 <style>
-/* 左侧目录侧边栏 */
-main:has(.toc-left-sidebar) { display: flex; gap: 0; position: relative; }
-main:has(.toc-left-sidebar) .content { flex: 1; min-width: 0; }
-.toc-left-sidebar { width: 260px; min-width: 260px; position: sticky; top: 5rem; align-self: flex-start; max-height: calc(100vh - 7rem); border-right: 1px solid var(--main-border-color); margin-right: 2rem; padding-right: 1rem; transition: all 0.3s ease; font-size: 0.875rem; background: var(--main-bg); }
-.toc-left-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--main-border-color); }
-.toc-left-title { font-weight: 600; color: var(--heading-color); font-size: 0.95rem; }
-.toc-left-toggle { background: none; border: 1px solid var(--btn-border-color); border-radius: 4px; padding: 4px 8px; cursor: pointer; color: var(--text-muted-color); font-size: 0.85rem; line-height: 1; transition: all 0.3s; flex-shrink: 0; }
-.toc-left-toggle:hover { color: var(--toc-highlight); border-color: var(--toc-highlight); }
-.toc-left-toggle i { pointer-events: none; }
-.toc-left-body { overflow-y: auto; max-height: calc(100vh - 12rem); scrollbar-width: thin; }
+/* 左侧目录：固定定位，不挤压文章 */
+.toc-left-sidebar {
+  position: fixed;
+  left: 0; top: 3.5rem;
+  width: 260px; height: calc(100vh - 3.5rem);
+  font-size: 0.875rem;
+  background: var(--card-bg, var(--main-bg));
+  border: 1px solid var(--main-border-color); border-left: none;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+  display: flex; flex-direction: column;
+  overflow: visible;
+  z-index: 50;
+  transition: transform 0.3s ease;
+}
+
+.toc-left-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--main-border-color);
+  flex-shrink: 0;
+  cursor: default;
+  user-select: none;
+}
+.toc-left-title {
+  font-weight: 600; color: var(--heading-color); font-size: 0.95rem;
+}
+
+/* 内容收起按钮（标题旁 ±） */
+.toc-content-toggle {
+  background: none; border: 1px solid var(--btn-border-color);
+  border-radius: 4px; padding: 2px 7px;
+  cursor: pointer; color: var(--text-muted-color);
+  font-size: 1rem; line-height: 1; font-family: monospace;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.toc-content-toggle:hover { color: var(--toc-highlight); border-color: var(--toc-highlight); }
+
+.toc-left-body {
+  overflow-y: auto; flex: 1;
+  scrollbar-width: thin; padding: 0.5rem 0;
+}
 .toc-left-body::-webkit-scrollbar { width: 3px; }
 .toc-left-body::-webkit-scrollbar-thumb { background: var(--text-muted-color); border-radius: 2px; }
-.toc-left-sidebar #toc-wrapper { position: static !important; max-height: none; margin-top: 0; padding: 0 !important; }
-.toc-left-sidebar .toc-link { display: block; padding: 0.25rem 0; color: var(--text-muted-color); text-decoration: none; border-left: 2px solid transparent; padding-left: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.toc-left-sidebar .toc-link:hover { color: var(--toc-highlight); text-decoration: none; border-left-color: var(--toc-highlight); }
-.toc-left-sidebar .is-active-link { color: var(--toc-highlight) !important; font-weight: 600; border-left-color: var(--toc-highlight); }
+
+/* 覆盖主题默认的 toc-wrapper 样式 */
+.toc-left-sidebar #toc-wrapper {
+  position: static !important; max-height: none;
+  margin-top: 0 !important; padding: 0 !important;
+}
+.toc-left-sidebar .toc-link {
+  display: block; padding: 0.3rem 1rem; color: var(--text-muted-color);
+  text-decoration: none; border-left: 2px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.toc-left-sidebar .toc-link:hover {
+  color: var(--toc-highlight); text-decoration: none;
+  border-left-color: var(--toc-highlight); background: var(--sidebar-hover-bg);
+}
+.toc-left-sidebar .is-active-link {
+  color: var(--toc-highlight) !important; font-weight: 600;
+  border-left-color: var(--toc-highlight);
+  background: var(--sidebar-hover-bg);
+}
 .toc-left-sidebar .toc-link::before { display: none !important; }
 .toc-left-sidebar .toc-list { list-style: none; padding-left: 0; margin: 0; }
 .toc-left-sidebar .toc-list .toc-list { padding-left: 1rem; }
 .toc-left-sidebar .toc-list-item { margin: 0; }
-.toc-left-sidebar.collapsed { width: 40px; min-width: 40px; padding-right: 0; margin-right: 1rem; }
-.toc-left-sidebar.collapsed .toc-left-title,
-.toc-left-sidebar.collapsed .toc-left-body { display: none; }
-.toc-left-sidebar.collapsed .toc-left-header { justify-content: center; border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-.toc-left-sidebar.collapsed .toc-left-toggle i { transform: rotate(180deg); }
+
+/* 目录内容折叠：整个框收起，只留标题栏 */
+.toc-left-sidebar.content-collapsed {
+  height: auto;
+  border-radius: 0 8px 8px 0;
+}
+.toc-left-sidebar.content-collapsed .toc-left-body { display: none; }
+.toc-left-sidebar.content-collapsed .toc-left-header { border-bottom: none; }
+
+/* 整个目录栏折叠（右侧箭头） */
+.toc-sidebar-toggle-btn {
+  position: absolute; right: -28px; top: 50%; transform: translateY(-50%);
+  width: 28px; height: 56px;
+  background: var(--card-bg, var(--main-bg));
+  border: 1px solid var(--main-border-color); border-left: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer; color: var(--text-muted-color);
+  font-size: 0.7rem; line-height: 56px; text-align: center;
+  z-index: 5; padding: 0;
+  box-shadow: 2px 0 4px rgba(0,0,0,0.06);
+  transition: background 0.2s, color 0.2s;
+}
+.toc-sidebar-toggle-btn:hover { color: var(--toc-highlight); background: var(--sidebar-hover-bg); }
+.toc-sidebar-toggle-btn i { pointer-events: none; transition: transform 0.3s ease; }
+
+/* 整个目录栏滑出屏幕 */
+.toc-left-sidebar.sidebar-collapsed {
+  transform: translateX(-260px);
+}
+.toc-left-sidebar.sidebar-collapsed .toc-sidebar-toggle-btn i { transform: rotate(180deg); }
+
 @media (max-width: 1199px) { .toc-left-sidebar { display: none !important; } }
 
 /* 文章页：加宽主内容区，减少左右空白 */
