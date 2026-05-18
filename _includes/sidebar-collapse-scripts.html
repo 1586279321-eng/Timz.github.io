@@ -1,15 +1,15 @@
 {% if page.layout == 'post' %}
 <script>
-  // 左侧目录：内容折叠 + 整个目录栏折叠
+  /* 左侧目录：内容折叠 + 整个目录栏折叠 */
   (function() {
     var sidebar = document.getElementById('toc-left-sidebar');
     var contentToggle = document.getElementById('toc-content-toggle');
     var sidebarToggle = document.getElementById('toc-sidebar-toggle-btn');
     if (!sidebar) return;
 
-    // 默认展开，不恢复之前的折叠状态
+    /* 默认展开，不恢复之前的折叠状态 */
 
-    // 标题旁按钮：折叠/展开目录内容
+    /* 标题旁按钮：折叠/展开目录内容 */
     if (contentToggle) {
       contentToggle.addEventListener('click', function() {
         sidebar.classList.toggle('content-collapsed');
@@ -19,7 +19,7 @@
       });
     }
 
-    // 右侧箭头：折叠/展开整个目录栏
+    /* 右侧箭头：折叠/展开整个目录栏 */
     if (sidebarToggle) {
       sidebarToggle.addEventListener('click', function() {
         sidebar.classList.toggle('sidebar-collapsed');
