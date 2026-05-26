@@ -12,8 +12,8 @@ article.has-toc { animation: fadeSlideIn 0.4s ease-out; }
 /* 左侧目录：固定定位，不挤压文章 */
 .toc-left-sidebar {
   position: fixed;
-  left: 0; top: 3.5rem;
-  width: 260px; height: calc(100vh - 3.5rem);
+  left: 0; top: 4rem;
+  width: 220px; max-height: 70vh;
   font-size: 0.875rem;
   background: var(--card-bg, var(--main-bg));
   border: 1px solid var(--main-border-color); border-left: none;
@@ -105,11 +105,11 @@ article.has-toc { animation: fadeSlideIn 0.4s ease-out; }
 
 /* 整个目录栏滑出屏幕 */
 .toc-left-sidebar.sidebar-collapsed {
-  transform: translateX(-260px);
+  transform: translateX(-220px);
 }
 .toc-left-sidebar.sidebar-collapsed .toc-sidebar-toggle-btn i { transform: rotate(180deg); }
 
-@media (max-width: 1199px) { .toc-left-sidebar { display: none !important; } }
+@media (max-width: 1399px) { .toc-left-sidebar { display: none !important; } }
 
 /* 文章页：加宽主内容区，减少左右空白 */
 @media (min-width: 1200px) {
