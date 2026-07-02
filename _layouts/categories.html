@@ -91,9 +91,15 @@ layout: page
             <i class="fas fa-fw fa-angle-down"></i>
           </a>
         {% else %}
-          <span data-bs-toggle="collapse" class="category-trigger hide-border-bottom disabled">
-            <i class="fas fa-fw fa-angle-right"></i>
-          </span>
+          <a
+            href="#{{ LIST_PREFIX }}{{ group_index }}"
+            data-bs-toggle="collapse"
+            aria-expanded="false"
+            aria-label="{{ HEAD_PREFIX }}{{ group_index }}-trigger"
+            class="category-trigger hide-border-bottom"
+          >
+            <i class="fas fa-fw fa-angle-down"></i>
+          </a>
         {% endif %}
       </div>
       <!-- .card-header -->
@@ -125,6 +131,18 @@ layout: page
                     }}
                   {% endif %}
                 </span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <!-- 无子分类时，展开显示该分类下的文章列表 -->
+        <div id="{{ LIST_PREFIX }}{{ group_index }}" class="collapse">
+          <ul class="list-group">
+            {% for post in posts_of_category reversed %}
+              <li class="list-group-item">
+                <i class="far fa-file fa-fw"></i>
+                <a href="{{ post.url | relative_url }}" class="mx-2">{{ post.title }}</a>
               </li>
             {% endfor %}
           </ul>
